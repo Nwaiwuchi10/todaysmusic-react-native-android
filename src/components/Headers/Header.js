@@ -1,11 +1,37 @@
-import { View, Text, TextInput, Image } from "react-native";
-import React from "react";
+import { View, Text, TextInput, Image, ScrollView } from "react-native";
+import React, { useEffect, useState } from "react";
 import { COLORS, DISPLAYBTW, SIZES } from "../../../constants";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { getMusicApi, getMusicVideoApi } from "../../data/Api";
+import MusicHome from "../../pages/Home/MusicHome";
+import MusicVideo from "../../pages/Home/MusicVideo";
 
 const Header = () => {
+  const [searchTitle, setSearchTitle] = useState("");
+  const [poster, setPoster] = useState([]);
+  const [posters, setPosters] = useState([]);
+  const [filtered, setFiltered] = useState("");
   const navigation = useNavigation();
+  const handleTextChange = (searchTitle) => {
+    setSearchTitle(searchTitle);
+  };
+
+  useEffect(() => {
+    fetch(getMusicApi)
+      .then((response) => response.json())
+
+      .then((posters) => setPosters(posters))
+      .catch((error) => console.error(error));
+  }, []);
+  useEffect(() => {
+    fetch(getMusicVideoApi)
+      .then((response) => response.json())
+
+      .then((poster) => setPoster(poster))
+      .catch((error) => console.error(error));
+  }, []);
+
   return (
     <View
       style={{
@@ -43,18 +69,6 @@ const Header = () => {
         </View>
       </View>
 
-      {/* <View style={{ marginVertical: SIZES.font }}>
-        <Text
-          style={{
-            // fontFamily: FONTS.bold,
-            fontSize: SIZES.small,
-            color: COLORS.white,
-            marginTop: SIZES.base / 2,
-          }}
-        >
-          Music is Life 👋
-        </Text>
-      </View> */}
       <View
         style={{
           flexDirection: "row",
@@ -123,7 +137,55 @@ const Header = () => {
             paddingVertical: SIZES.small - 2,
           }}
         >
-          <TextInput placeholder="Search For Music" style={{ flex: 1 }} />
+          <TextInput
+            placeholder="Search For Music"
+            onChangeText={handleTextChange}
+            style={{ flex: 1 }}
+          />
+        </View>
+        <View
+          style={{ backgroundColor: "white", marginTop: 50, height: "auto" }}
+        >
+          <ScrollView style={{ height: "auto" }}>
+            {posters
+              ?.filter((value) => {
+                if (searchTitle === "") {
+                  return value;
+                } else if (
+                  value.artist.toLowerCase().includes(searchTitle.toLowerCase())
+                ) {
+                  return value;
+                }
+              })
+              .map((usery) => (
+                <View key={usery._id}>
+                  {searchTitle ? (
+                    <View>
+                      <MusicHome data={usery} />
+                    </View>
+                  ) : null}
+                </View>
+              ))}
+            {poster
+              ?.filter((value) => {
+                if (searchTitle === "") {
+                  return value;
+                } else if (
+                  value.artist.toLowerCase().includes(searchTitle.toLowerCase())
+                ) {
+                  return value;
+                }
+              })
+              .map((usery) => (
+                <View key={usery._id}>
+                  {searchTitle ? (
+                    <View>
+                      <MusicVideo data={usery} />
+                    </View>
+                  ) : null}
+                </View>
+              ))}
+          </ScrollView>
         </View>
       </View>
     </View>

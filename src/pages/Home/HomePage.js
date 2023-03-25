@@ -20,6 +20,8 @@ import MusicVideo from "./MusicVideo";
 import { TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import HomeMusicData from "./HomeMusicData";
+import Loader from "../../components/Loader/Loader";
+import { Loaders } from "../../components/Loader/Loaders";
 
 const HomePage = () => {
   const { height } = Dimensions.get("window");
@@ -52,29 +54,7 @@ const HomePage = () => {
   return (
     <SafeAreaView style={styles.safediv}>
       <MainStatusBar background={COLORS.primary} />
-      <View>
-        {/* <Header /> */}
 
-        {/* <View
-          style={{
-            position: "absolute",
-            top: 0,
-            // bottom: 0,
-            right: 0,
-            left: 0,
-            zIndex: -1,
-          }}
-        > */}
-        {/* <View
-            style={{
-              height: 8000,
-              backgroundColor: COLORS.primary,
-            }}
-          /> */}
-
-        {/* <View style={{ flex: 1, backgroundColor: COLORS.white }} /> */}
-        {/* </View> */}
-      </View>
       <View>
         <HomeMusicData />
       </View>

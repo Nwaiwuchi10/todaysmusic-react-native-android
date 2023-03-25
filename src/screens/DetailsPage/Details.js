@@ -5,6 +5,7 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  Linking,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useRoute } from "@react-navigation/native";
@@ -12,6 +13,7 @@ import MainStatusBar from "../../components/StatusBar/MainStatusBar";
 import Header from "../../components/Headers/Header";
 import GoBack from "../../pages/GoBackNavigator/GoBack";
 
+// import RNFetchBlob from "rn-fetch-blob";
 const Details = ({ navigation, document }) => {
   // const id = route.params.id;
   const route = useRoute();
@@ -30,15 +32,7 @@ const Details = ({ navigation, document }) => {
       .catch((error) => console.error(error));
   }, [id]);
 
-  const handleDownload = () => {
-    // You can use the HTML5 `download` attribute to download the MP3 file
-    const downloadLink = document.createElement("a");
-    downloadLink.href = mp3Data?.filepath;
-    downloadLink.download = `${mp3Data.title}.mp3`;
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    document.body.removeChild(downloadLink);
-  };
+  // const handleDownload = () => {};
 
   return (
     <SafeAreaView>
@@ -150,7 +144,7 @@ const Details = ({ navigation, document }) => {
           </View>
           <View>
             <TouchableOpacity
-              onPress={handleDownload}
+              // onPress={handleDownload}
               style={{
                 textAlign: "center",
 

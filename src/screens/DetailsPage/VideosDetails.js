@@ -5,12 +5,15 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  Button,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useRoute } from "@react-navigation/native";
 import MainStatusBar from "../../components/StatusBar/MainStatusBar";
 import Header from "../../components/Headers/Header";
 import GoBack from "../../pages/GoBackNavigator/GoBack";
+
+import YouTubePlayer from "react-native-youtube-iframe";
 
 const VideoDetails = ({ navigation }) => {
   // const id = route.params.id;
@@ -22,6 +25,7 @@ const VideoDetails = ({ navigation }) => {
   const [viewPost, setViewPost] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(true);
+
   useEffect(() => {
     fetch(`https://todaysmusic.herokuapp.com/api/mp4/${id}`)
       .then((response) => response.json())
@@ -137,6 +141,14 @@ const VideoDetails = ({ navigation }) => {
             >
               Watch & Listen below
             </Text>
+          </View>
+          <View>
+            {/* <YouTubePlayer
+              videoId="dQw4w9WgXcQ"
+              width={300}
+              height={200}
+              play={true}
+            /> */}
           </View>
         </View>
       </ScrollView>
